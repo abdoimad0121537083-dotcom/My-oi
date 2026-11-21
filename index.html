@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Nousa</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #ffe5ec, #ffc2d1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+            cursor: pointer;
+            text-align: center;
+        }
+        .container {
+            pointer-events: none;
+        }
+        h1 {
+            font-size: 3.5rem;
+            color: #ff477e;
+            margin: 0 0 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            font-weight: 700;
+        }
+        p {
+            font-size: 1.5rem;
+            color: #ff7096;
+            margin: 0;
+            font-style: italic;
+        }
+        .heart {
+            position: absolute;
+            font-size: 2rem;
+            color: #ff4f79;
+            pointer-events: none;
+            animation: floatUp 2s ease-out forwards;
+            opacity: 0.9;
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(calc(-50% + var(--x)), calc(-50% - 150px)) scale(1.5);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>I Love You, Nousa</h1>
+        <p>From Your Lover</p>
+    </div>
+
+    <script>
+        document.body.addEventListener('click', (e) => {
+            createHeart(e.clientX, e.clientY);
+        });
+
+        // Auto hearts on load
+        setInterval(() => {
+            const x = Math.random() * window.innerWidth;
+            const topPos = window.innerHeight + 20;
+            createHeart(x, topPos);
+        }, 400);
+
+        function createHeart(x, y) {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
+            
+            // Random horizontal drift
+            const drift = (Math.random() - 0.5) * 100;
+            heart.setProperty ? heart.setProperty('--x', drift + 'px') : heart.style.setProperty('--x', drift + 'px');
+            
+            // Random size variation
+            const size = Math.random() * 1.5 + 1;
+            heart.style.transform = `scale(${size})`;
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
